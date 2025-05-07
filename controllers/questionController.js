@@ -103,6 +103,11 @@ const createQuestion = async (req, res, next) => {
   try {
     const { questionText, type, options, correctAnswer, modelAnswer, points, chapter, subjectId, level } = req.body;
 
+    // Parse options if provided as a string
+    if (options && typeof options === 'string') {
+      req.body.options = JSON.parse(options);
+    }
+
     // Validate required fields
     if (!subjectId) {
       return res.status(400).json({
@@ -138,7 +143,7 @@ const createQuestion = async (req, res, next) => {
     const questionData = {
       questionText,
       type,
-      options,
+      options: req.body.options, // Use the parsed options
       correctAnswer,
       modelAnswer,
       points,
