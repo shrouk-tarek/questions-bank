@@ -20,10 +20,10 @@ const QuestionSchema = new mongoose.Schema({
     enum: ['true_false', 'mcq', 'open_text', 'complete'],
     required: [true, 'Please add a question type']
   },
-  questionText: {
+ questionText: {
     type: String,
-    required: function() {
-      return !this.questionImage;
+    required: function () {
+      return this.type === 'open_text';
     }
   },
   questionImage: {
