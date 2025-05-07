@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Question = require('../models/Question');
 const Subject = require('../models/Subject'); // Import Subject model
-const StudentAnswer = require('../models/StudentAnswer');
+const cloudinary = require('cloudinary').v2; // Import Cloudinary
 const ErrorResponse = require('../utils/errorHandler');
 
 // @desc    Get all questions
@@ -147,9 +147,13 @@ const createQuestion = async (req, res, next) => {
       level,
     };
 
-    // Add image path if uploaded
+    // Upload image to Cloudinary if provided
     if (req.file) {
-      questionData.image = `/uploads/${req.file.filename}`;
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'questions',
+        resource_type: 'image',
+      });
+      questionData.image = result.secure_url; // Save the Cloudinary URL
     }
 
     const question = await Question.create(questionData);
