@@ -1,5 +1,5 @@
 const express = require('express');
-const { getSubjects, createSubject, addChapter, deleteChapter, deleteSubject } = require('../controllers/subjectController');
+const { getSubjects, createSubject, addChapter, deleteChapter, deleteSubject, getChaptersBySubject } = require('../controllers/subjectController');
 const { protect, adminOnly } = require('../middlewares/auth');
 
 const router = express.Router();
@@ -9,6 +9,7 @@ router.route('/')
   .post(protect, adminOnly, createSubject);
 
 router.route('/:subjectId/chapters')
+  .get(getChaptersBySubject)
   .post(protect, adminOnly, addChapter);
 
 router.route('/:subjectId/chapters/:chapterId')
