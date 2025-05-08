@@ -103,3 +103,29 @@ exports.deleteSubject = async (req, res, next) => {
     next(err);
   }
 };
+
+// @desc    Get all chapters related to a subject
+// @route   GET /api/subjects/:subjectId/chapters
+// @access  Public
+exports.getChaptersBySubject = async (req, res, next) => {
+  try {
+    const { subjectId } = req.params;
+
+    const chapters = await Chapter.find({ subjectId });
+
+    if (!chapters || chapters.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'No chapters found for this subject',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      count: chapters.length,
+      data: chapters,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
