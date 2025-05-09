@@ -3,6 +3,7 @@ const Question = require('../models/Question');
 const Subject = require('../models/Subject'); // Import Subject model
 const cloudinary = require('cloudinary').v2; // Import Cloudinary
 const ErrorResponse = require('../utils/errorHandler');
+const StudentAnswer = require('../models/StudentAnswer'); // Import StudentAnswer model
 
 // @desc    Get all questions
 // @route   GET /api/questions
@@ -186,7 +187,11 @@ const deleteQuestion = async (req, res) => {
       });
     }
 
-    await Question.deleteOne({ _id: req.params.id }); // Use deleteOne instead of remove
+    // Delete related student answers
+    await StudentAnswer.deleteMany({ questionId: question._id });
+
+    // Delete the question
+    await question.deleteOne();
 
     res.status(200).json({
       success: true,
