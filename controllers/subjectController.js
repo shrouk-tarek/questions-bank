@@ -153,3 +153,27 @@ exports.getChaptersBySubject = async (req, res, next) => {
     next(err);
   }
 };
+
+// @desc    Get all subjects with their associated chapters
+// @route   GET /api/subjects/with-chapters
+// @access  Public
+exports.getSubjectsWithChapters = async (req, res, next) => {
+  try {
+    const subjects = await Subject.find().lean();
+
+    const subjectsWithChapters = await Promise.all(
+      subjects.map(async (subject) => {
+        const chapters = await Chapter.find({ subjectId: subject._id });
+        return { ...subject, chapters };
+      })
+    );
+
+    res.status(200).json({
+      success: true,
+      count: subjectsWithChapters.length,
+      data: subjectsWithChapters,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
