@@ -15,7 +15,7 @@ const getQuestions = async (req, res, next) => {
     removeFields.forEach(param => delete reqQuery[param]);
 
     // Store the limit parameter separately
-    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 25; // Default to 25
+    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 1000; // Default to 1000
     if (isNaN(limit) || limit <= 0) {
       return res.status(400).json({
         success: false,
