@@ -1,18 +1,6 @@
 # Questions Bank
 
-A working backend for a Graduation Project that serves as a question bank and assessment management platform. This project allows administrators and students to manage subjects, chapters, and questions, and enables automated evaluation of student answers. It is built with Node.js, Express, and MongoDB, and supports image uploads (via Cloudinary) and integration with generative AI for answer evaluation.
-
----
-
-## Features
-
-- User authentication with student/admin roles
-- Subject and chapter management
-- Question CRUD with support for multiple types (MCQ, open-ended, etc.)
-- Image upload (Cloudinary integration)
-- Student answer submission, auto-grading, and answer history
-- AI-powered answer evaluation (Google Gemini integration)
-- RESTful API structure
+A RESTful API for managing a questions bank system with authentication, user roles, question management, and AI-powered answer evaluation (using Gemini API).
 
 ---
 
@@ -80,7 +68,7 @@ npm run dev
 
 This will start the backend server using `nodemon` if configured, or just `node` for standard startup.
 
-**Default port:** `3000` (can be changed in environment variables or code)
+**Default port:** `5000` (can be changed in environment variables or code)
 
 ---
 
@@ -98,7 +86,7 @@ This will clear existing data and insert admin/student users, subjects, chapters
 
 ## API Usage
 
-- Base URL: `http://localhost:3000/api/`
+- Base URL: `http://localhost:5000/api/`
 - Endpoints include `/users`, `/subjects`, `/chapters`, `/questions`, `/answers`, etc.
 - Use tools like Postman for API interaction.
 
